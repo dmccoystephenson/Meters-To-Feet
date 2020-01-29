@@ -2,65 +2,6 @@
 
 using namespace std;
 
-Text::Text() {
-	xpos = 0;
-	ypos = 0;
-	width = 0;
-	height = 0;
-	texture = NULL;
-	innerText = "";
-}
-
-Text::~Text() {
-	free();
-}
-
-void Text::setPosition(int x, int y) {
-	xpos = x;
-	ypos = y;
-}
-
-void Text::free() {
-	if (texture != NULL) {
-		SDL_DestroyTexture(texture);
-		texture = NULL;
-		width = 0;
-		height = 0;
-	}
-}
-
-void Text::loadText(std::string textToRender, SDL_Color textColor) {
-	free();
-	SDL_Texture* newTexture = NULL;
-	SDL_Surface* temp_surface = TTF_RenderText_Solid(gFont, textToRender.c_str(), textColor);
-	newTexture = SDL_CreateTextureFromSurface(gRenderer, temp_surface);
-	width = temp_surface->w;
-	height = temp_surface->h;
-	SDL_FreeSurface(temp_surface);
-	texture = newTexture;
-}
-
-void Text::render() {
-	SDL_Rect renderQuad = {xpos, ypos, width, height};
-	SDL_RenderCopy(gRenderer, texture, NULL, &renderQuad);
-}
-
-int Text::getX() {
-	return xpos;
-}
-
-int Text::getY() {
-	return ypos;
-}
-
-int Text::getWidth() {
-	return width;
-}
-
-int Text::getHeight() {
-	return height;
-}
-
 void init() {
 	SDL_Init(SDL_INIT_VIDEO);
 	gWindow = SDL_CreateWindow("Meters To Feet", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -98,6 +39,13 @@ void drawRectangle(int x, int y, int w, int h, int r, int g, int b, int o) {
 int main(int argc, char* args[]) {
 	init();
 	loadMedia();
+	
+	prompt.setRenderer(gRenderer);
+	prompt.setFont(gFont);
+	input.setRenderer(gRenderer);
+	input.setFont(gFont);
+	output.setRenderer(gRenderer);
+	output.setFont(gFont);
 	
 	SDL_Color color = {0, 0, 0, 0xFF};	
 	prompt.loadText("Enter int in meters:", color);
