@@ -4,27 +4,7 @@
 #include <iostream>
 #include <string>
 
-class Text {
-	public:
-		Text();
-		~Text();
-		void setPosition(int x, int y);
-		void free();
-		void loadText(std::string textToRender, SDL_Color textColor);
-		void render();
-		int getX();
-		int getY();
-		int getWidth();
-		int getHeight();
-		
-	private:
-		int xpos;
-		int ypos;
-		int width;
-		int height;
-		SDL_Texture* texture;
-		std::string innerText;
-};
+#include "Text.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
